@@ -92,27 +92,23 @@ class LoggingHook(BackreactionHook):
         self.stats_history = []
 
 class AccumulationHook(BackreactionHook):
-    def __init__(self, decay_factor=0.9,name="accumulation_hook"):
+    def __init__(self, decay_factor=0.9, name="accumulation_hook"):
         super().__init__(name)
-       self.accumulated = None
-      self.decay_factor = decay_factor
-       
+        self.accumulated = None
+        self.decay_factor = decay_factor
+
     def process(self, layer, backreaction, **kwargs):
-        # Initialize accumulated if not already done
         if self.accumulated is None:
             self.accumulated = torch.zeros_like(backreaction)
-        
-        # Handle shape mismatches (e.g. different batch sizes)
+
         if self.accumulated.shape != backreaction.shape:
-            # If shapes differ, compute batch average and accumulate
             avg_backtrack = torch.mean(backreaction, dim=0, keepdim=True)
             self.accumulated = self.decay_factor * self.accumulated + (1 - self.decay_factor) * avg_backtrack
         else:
-            # Update with exponential decay
             self.accumulated = self.decay_factor * self.accumulated + (1 - self.decay_factor) * backreaction
-    
+
     def get_accumulated(self):
         return self.accumulated
-    
+
     def reset_accumulation(self):
         self.accumulated = None
