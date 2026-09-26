@@ -3,7 +3,7 @@ import torch.nn as nn
 from .base import SphericalOperator as Operator
 
 class RadialWarpOperator(Operator):
-    def __init__(self, warp_type, parameters, custom_function, trainable):
+    def __init__(self, warp_type='polynomial', parameters=None, custom_function=None, trainable=False):
         super().__init__(trainable=trainable)
         self.warp_type = warp_type
         default_parameters = {
