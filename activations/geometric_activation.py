@@ -21,9 +21,9 @@ class GeometricActivationLayer(nn.Module):
     def forward(self, x, return_backreaction=False):
         original = x
         spherical = cartesian_to_spherical(x)
-        transformed_spherical = self.operator(spherical
+        transformed_spherical = self.operator(spherical)
         transformed_cartesian = spherical_to_cartesian(transformed_spherical, strict=self.strict_conversion)
-                                              
+
         if self.backreaction_mode != 'none':
             reaction = backreaction(original, transformed_cartesian, mode=self.backreaction_mode)
             if self.store_backreaction:
