@@ -1,1 +1,2 @@
-# GAF
+# Geometric Activation Framework (GAF)
+
