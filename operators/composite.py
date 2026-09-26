@@ -1,5 +1,7 @@
 import torch
 from .base import SphericalOperator as Operator
+from .rotator import RotatorOperator
+from .radial_warp import RadialWarpOperator
 
 class CompositeOperator(Operator):
     def __init__(self, first, second):
@@ -11,4 +13,4 @@ class CompositeOperator(Operator):
         return self.second(self.first(coordinates))
 
 def make_default():
-    pass
+    return CompositeOperator(first=RotatorOperator(axis="z", trainable=True), second=RadialWarpOperator(warp_type="polynomial", parameters={"a": 1.0, "n": 1.0, "b": 0.0}, trainable=True))
