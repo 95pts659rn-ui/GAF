@@ -159,7 +159,7 @@ class GeometricMLP(nn.Module):
     def remove_hook(self, hook):
         self.hook_manager.unregister(hook)
     
-    def forward(self, x, return_backreaction):
+    def forward(self, x, return_backreaction=False):
         # Project input to 3D if necessary
         if self.input_projection is not None:
             x = self.input_projection(x)
