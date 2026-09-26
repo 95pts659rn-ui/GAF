@@ -1,11 +1,13 @@
 import torch
 
+
 def cartesian_to_spherical(c, epsilon=1e-8):
     x, y, z = c[..., 0], c[..., 1], c[..., 2]
-    r = torch.clamp(torch.sqrt(x*x, y*y, z*z), min=epsilon)
+    r = torch.sqrt(x * x + y * y + z * z)
+    r = torch.clamp(r, min=epsilon)
     theta = torch.acos(torch.clamp(z / r, min=-1.0, max=1.0))
-    phi = torch.atan2(y, z)
-    phi = torch.where(phi < 0, phi + torch.pi + torch.pi, phi)
+    phi = torch.atan2(y, x)
+    phi = torch.where(phi < 0, phi + 2 * torch.pi, phi)
     return torch.stack([r, theta, phi], dim=-1)
 
 def spherical_to_cartesian(s, strict=False):
