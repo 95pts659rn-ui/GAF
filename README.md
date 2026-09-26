@@ -165,9 +165,3 @@ pip install torch numpy matplotlib pytest
 - NumPy
 - Matplotlib
 - pytest
-
-## Research framing
-
-GAF is useful as a prototype for exploring whether neural representation learning can benefit from a more explicit geometric treatment of nonlinearity. Rather than assuming activations are purely local scalar transforms, the framework asks whether a learned or structured transformation can better respect the geometry of the latent space. In that sense, the repository is best read as an experimental platform for studying alternatives to static nonlinearities in research settings.
-
-The goal is not simply to outperform a standard activation on one benchmark, but to characterize when geometric structure offers a meaningful inductive bias and when it becomes redundant or harmful.
